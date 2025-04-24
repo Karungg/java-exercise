@@ -17,35 +17,54 @@ public class ToDoListApp {
             System.out.println("1. Add Task");
             System.out.println("2. Mark Task as Done");
             System.out.println("3. Exit:");
-            System.out.println("Choose : ");
 
-            try {
-                int choise = scanner.nextInt();
-                scanner.nextLine();
+            int choice = -1;
+            boolean validChoice = false;
 
-                if (choise == 1) {
-                    System.out.println("Enter task description : ");
-                    String description = scanner.nextLine();
-                    tasks.add(new Task(description));
-                } else if (choise == 2) {
-                    System.out.println("Enter task number to mark as done : ");
-                    int index = scanner.nextInt() - 1;
-                    if (index >= 0 && index < tasks.size()) {
-                        tasks.get(index).markAsDone();
-                    } else {
-                        System.out.println("Invalid task number");
-                    }
-                } else if (choise == 3) {
-                    System.out.println("Goodbye");
-                    break;
-                } else {
-                    System.out.println("Invalid choise");
+            while (!validChoice) {
+                System.out.print("Choose: ");
+                try {
+                    choice = scanner.nextInt();
+                    scanner.nextLine();
+                    validChoice = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input, please enter a valid number.");
+                    scanner.nextLine();
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Mohon masukkan input dengan benar");
-                continue;
+            }
+
+            if (choice == 1) {
+                System.out.println("Enter task description: ");
+                String description = scanner.nextLine();
+                tasks.add(new Task(description));
+            } else if (choice == 2) {
+                int index = -1;
+                boolean validTaskIndex = false;
+
+                while (!validTaskIndex) {
+                    System.out.println("Enter task number to mark as done: ");
+                    try {
+                        index = scanner.nextInt() - 1;
+                        scanner.nextLine();
+                        if (index >= 0 && index < tasks.size()) {
+                            tasks.get(index).markAsDone();
+                            validTaskIndex = true;
+                        } else {
+                            System.out.println("Invalid task number, try again.");
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid input, please enter a valid number.");
+                        scanner.nextLine();
+                    }
+                }
+            } else if (choice == 3) {
+                System.out.println("Goodbye");
+                break;
+            } else {
+                System.out.println("Invalid choice, please try again.");
             }
         }
+
         scanner.close();
     }
 }
