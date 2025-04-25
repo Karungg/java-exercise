@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -10,8 +11,7 @@ public class Main {
 
         do {
             header();
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = getValidIntInput(scanner, "Pilih : ");
             switch (choice) {
                 case 1:
                     addStudent(scanner, students);
@@ -45,11 +45,10 @@ public class Main {
         System.out.println("3. Ubah Mahasiswa");
         System.out.println("4. Hapus Mahasiswa");
         System.out.println("5. Keluar");
-        System.out.print("Pilih: ");
     }
 
     public static void addStudent(Scanner scanner, ArrayList<Student> students) {
-        System.out.println("Tambah Mahasiswa");
+        System.out.println("\nTambah Mahasiswa");
         System.out.println("Nama : ");
         String name = scanner.nextLine();
         System.out.println("NIM : ");
@@ -64,7 +63,7 @@ public class Main {
         } else {
             title = "=".repeat(10) + " DATA MAHASISWA " + "=".repeat(10);
         }
-        System.out.println("=".repeat(title.length()));
+        System.out.println("\n" + "=".repeat(title.length()));
         System.out.println(title);
         for (int i = 0; i < students.size(); i++) {
             System.out.println("No." + (i + 1) + " " + students.get(i));
@@ -73,6 +72,21 @@ public class Main {
     }
 
     public static void updateStudent(Scanner scanner, ArrayList<Student> students) {
-        
+        int index = getValidIntInput(scanner, "Pilih data yang ingin diubah : ");
+        System.out.println(index);
+    }
+
+    public static int getValidIntInput(Scanner scanner, String prompt) {
+        while (true) {
+            try {
+                System.out.println(prompt);
+                int value = scanner.nextInt();
+                scanner.nextLine();
+                return value;
+            } catch (InputMismatchException e) {
+                System.out.println("Mohon masukkan input yang valid");
+                scanner.nextLine();
+            }
+        }
     }
 }
