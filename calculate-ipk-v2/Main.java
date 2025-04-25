@@ -24,10 +24,10 @@ public class Main {
                     updateStudent(scanner, students);
                     break;
                 case 4:
-                    System.out.println("Pilihan 4");
+                    deleteStudent(scanner, students);
                     break;
                 case 5:
-                    System.out.println("Pilihan 5");
+                    System.out.println("Terimakasih");
                     break;
                 default:
                     System.out.println("Pilihan tidak valid");
@@ -72,8 +72,41 @@ public class Main {
     }
 
     public static void updateStudent(Scanner scanner, ArrayList<Student> students) {
-        int index = getValidIntInput(scanner, "Pilih data yang ingin diubah : ");
-        System.out.println(index);
+        if (!students.isEmpty()) {
+            int choice = getValidIntInput(scanner, "Pilih data yang ingin diubah : ");
+            int index = choice - 1;
+            if (index >= 0 && index < students.size()) {
+                System.out.println("Masukkan nama baru : ");
+                String name = scanner.nextLine();
+                System.out.println("Masukkan NIM baru : ");
+                String nim = scanner.nextLine();
+                Student newStudent = students.get(index);
+                newStudent.setName(name);
+                newStudent.setNim(nim);
+                System.out.println("MAHASISWA BERHASIL DIUBAH");
+                showStudents(students);
+            } else {
+                System.out.println("Data tidak ditemukan");
+            }
+        } else {
+            System.out.println("TIDAK ADA DATA YANG DAPAT DIUBAH");
+        }
+    }
+
+    public static void deleteStudent(Scanner scanner, ArrayList<Student> students) {
+        if (!students.isEmpty()) {
+            int choice = getValidIntInput(scanner, "Pilih data yang ingin dihapus : ");
+            int index = choice - 1;
+            if (index >= 0 && index < students.size()) {
+                students.remove(index);
+                System.out.println("MAHASISWA BERHASIL DIHAPUS");
+                showStudents(students);
+            } else {
+                System.out.println("Data tidak ditemukan");
+            }
+        } else {
+            System.out.println("TIDAK ADA DATA YANG DAPAT DIHAPUS");
+        }
     }
 
     public static int getValidIntInput(Scanner scanner, String prompt) {

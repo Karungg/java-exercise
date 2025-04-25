@@ -25,6 +25,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Nama : " + name + ". NIM : " + nim;
+        return "Nama : " + name + " NIM : " + nim;
     }
 }
